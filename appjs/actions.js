@@ -60,7 +60,7 @@ function writeFilesPausa(){
 		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
 			archivo.createWriter(function(escritor){
 				escritor.onwrite = function(e){
-					pgAlert("El archivo fue escrito Correctamente!");
+					//pgAlert("El archivo fue escrito Correctamente!");
 				};
 				escritor.write(content);
 			}, function(){
@@ -74,25 +74,21 @@ function writeFilesPausa(){
 	});
 }
 
-//escribe comentario de reanudacion
-function writeFilesReanuda(){
-	var content = 'La Aplicacion se ha reanudado';
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
-			archivo.createWriter(function(escritor){
-				escritor.onwrite = function(e){
-					pgAlert("El archivo fue escrito Correctamente!");
-				};
-				escritor.write(content);
-			}, function(){
-				pgAlert("No existe el archivo, agrega contenido y luego presiona en Escribir");
-			});
-		}, function(err){
-			pgAlert("No se pudo acceder al sistema de archivos 1");
-		});
-	}, function(err){
-		pgAlert("No se pudo acceder al sistema de archivos 2");
-	});
+//muestra cuadro de reanudacion
+function Reanuda(){
+	navigator.notification.confirm('¿que desea hacer?', function(boton){ 
+			switch(boton){
+				case '0':
+					//navigator.notification.beep(1);
+					break;
+				case '1':
+					navigator.notification.vibrate(500);
+					break;
+				case '2':
+					navigator.notification.alert("Plataforma", function(){ },"Practica 3","Aceptar");
+					break;
+				}
+		},"Práctica 1","Cancelar,Vibrar,Plataforma");		
 }
 
 $(document).ready(function(){
@@ -112,14 +108,8 @@ $(document).ready(function(){
 		document.addEventListener("resume", function(){//Al volver a la aplicación
 			//eventHistory('La aplicaci&oacute;n se reinici&oacute;');
 			//escribimos n el archivo
-			writeFilesReanuda();
-		}, false);
-		document.addEventListener("online", function(){//Al conectarse a la red
-			eventHistory('La aplicaci&oacute;n se ha conectado');
-		}, false);
-		document.addEventListener("offline", function(){//Al desconectarse de la red
-			eventHistory('La aplicaci&oacute;n se ha desconectado');
-		}, false);
+			Reanuda();
+		}, false);		
 		
 		//Acciones de formularios
 			$('.sendForm').click(function(){
