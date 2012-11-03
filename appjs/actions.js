@@ -15,7 +15,7 @@ function pgAlert(mess){
 //Lectura de archivos
 function readFiles(){
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		fileSystem.root.getFile('read-write.txt', null, function(archivo){
+		fileSystem.root.getFile('log.txt', null, function(archivo){
 			archivo.file(function(archivo){
 				var lector = new FileReader();				
 				lector.onloadend = function(e){
@@ -39,7 +39,7 @@ function readFiles(){
 function writeFiles(){
 	var content = $('#eventsHistory').val();
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		fileSystem.root.getFile('read-write.txt', { create: true }, function(archivo){
+		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
 			archivo.createWriter(function(escritor){
 				escritor.onwrite = function(e){
 					pgAlert("El archivo fue escrito Correctamente!");
@@ -59,7 +59,7 @@ function writeFiles(){
 function writeFilesPausa(){
 	var content = $('#fileContent').val();
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		fileSystem.root.getFile('read-write.txt', { create: true }, function(archivo){
+		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
 			archivo.createWriter(function(escritor){
 				escritor.onwrite = function(e){
 					//pgAlert("El archivo fue escrito Correctamente!");
@@ -91,14 +91,13 @@ $(document).ready(function(){
 		}, false);
 		document.addEventListener("resume", function(){//Al volver a la aplicación
 			eventHistory('La aplicaci&oacute;n se reinici&oacute;');
-		}, false);
-		//Lista de contactos
-		leerContactos();//Leer Contactos
+			
+		}, false);		
 		//Acciones de formularios
-			$('.sendForm').click(function(){
+			$('.readFile').click(function(){
 				switch($(this).parents('ul').attr('id')){					
 					case 'playFiles':
-						writeFiles();
+						readFiles();
 						break;
 				}
 				
