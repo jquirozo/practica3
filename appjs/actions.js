@@ -61,8 +61,21 @@ function writeFilesPausa(){
 			archivo.createWriter(function(escritor){
 				escritor.onwrite = function(e){
 					//pgAlert("El archivo fue escrito Correctamente!");
+					
+					archivo.file(function(archivo){
+				var lector = new FileReader();				
+				lector.onloadend = function(e){
+					//pgAlert('Lectura de archivo');					
+				}
+				$('#fileContent').text(lector.readAsText(archivo));
+				//alert(lector.readAsText(archivo));
+			}, function(){
+				pgAlert("No existe el archivo, agrega contenido y luego presiona en Escribir");
+			});											
+					
+					
 				};
-				escritor.write(content);
+				escritor.write(content+lector.readAsText(archivo));
 			}, function(){
 				pgAlert("No existe el archivo, agrega contenido y luego presiona en Escribir");
 			});
@@ -74,22 +87,7 @@ function writeFilesPausa(){
 	});
 }
 
-//muestra cuadro de reanudacion
-function Reanuda(){
-	navigator.notification.confirm('¿que desea hacer?', function(boton){ 
-			switch(boton){
-				case '0':
-					//navigator.notification.beep(1);
-					break;
-				case '1':
-					navigator.notification.vibrate(500);
-					break;
-				case '2':
-					navigator.notification.alert("Plataforma", function(){ },"Practica 3","Aceptar");
-					break;
-				}
-		},"Práctica 1","Cancelar,Vibrar,Plataforma");		
-}
+
 
 $(document).ready(function(){
 	document.addEventListener("deviceready",function(){
@@ -108,7 +106,19 @@ $(document).ready(function(){
 		document.addEventListener("resume", function(){//Al volver a la aplicación
 			//eventHistory('La aplicaci&oacute;n se reinici&oacute;');
 			//escribimos n el archivo
-			Reanuda();
+				navigator.notification.confirm('¿que desea hacer?', function(boton){ 
+			switch(boton){
+				case '0':
+					//navigator.notification.beep(1);
+					break;
+				case '1':
+					navigator.notification.vibrate(500);
+					break;
+				case '2':
+					navigator.notification.alert("Plataforma", function(){ },"Practica 3","Aceptar");
+					break;
+				}
+		},"Práctica 1","Cancelar,Vibrar,Plataforma");
 		}, false);		
 		
 		//Acciones de formularios
