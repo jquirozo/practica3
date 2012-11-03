@@ -37,7 +37,7 @@ function readFiles(){
 function writeFiles(){
 	var content = $('#fileContent').val();
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		fileSystem.root.getFile('read-write.txt', { create: true }, function(archivo){
+		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
 			archivo.createWriter(function(escritor){
 				escritor.onwrite = function(e){
 					pgAlert("El archivo fue escrito Correctamente!");
@@ -101,12 +101,14 @@ $(document).ready(function(){
 		document.addEventListener("pause", function(){//Al pausar la aplicación
 			//eventHistory('La aplicaci&oacute;n se paus&oacute;');
 			//escribimos en el archivo
-			writeFilesPausa();
+			//writeFilesPausa();
+			pgAlert(pausa);
 		}, false);
 		document.addEventListener("resume", function(){//Al volver a la aplicación
+			pgAlert(reanuda);
 			//eventHistory('La aplicaci&oacute;n se reinici&oacute;');
 			//escribimos n el archivo
-				navigator.notification.confirm('¿que desea hacer?', function(boton){ 
+			/*navigator.notification.confirm('¿que desea hacer?', function(boton){ 
 			switch(boton){
 				case '0':
 					//navigator.notification.beep(1);
@@ -118,7 +120,7 @@ $(document).ready(function(){
 					navigator.notification.alert("Plataforma", function(){ },"Practica 3","Aceptar");
 					break;
 				}
-		},"Práctica 1","Cancelar,Vibrar,Plataforma");
+		},"Práctica 1","Cancelar,Vibrar,Plataforma");*/
 		}, false);		
 		
 		//Acciones de formularios
