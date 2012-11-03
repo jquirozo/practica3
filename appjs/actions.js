@@ -18,8 +18,9 @@ function readFiles(){
 		fileSystem.root.getFile('log.txt', null, function(archivo){
 			archivo.file(function(archivo){
 					var lector = new FileReader();				
-					lector.onloadend = function(e){
-					pgAlert('Lectura de archivo'+lector.readAsText(archivo));					
+					lector.onloadend = function(e){						
+					pgAlert('Lectura de archivo'+e.target.result);	
+									
 				}
 				$('#fileContent').text(lector.readAsText(archivo));
 				alert(lector.readAsText(archivo));
