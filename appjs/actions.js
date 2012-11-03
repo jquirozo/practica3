@@ -19,7 +19,7 @@ function readFiles(){
 			archivo.file(function(archivo){
 					var lector = new FileReader();				
 					lector.onloadend = function(e){
-					//pgAlert('Lectura de archivo');					
+					pgAlert('Lectura de archivo');					
 				}
 				$('#fileContent').text(lector.readAsText(archivo));
 				alert(lector.readAsText(archivo));
