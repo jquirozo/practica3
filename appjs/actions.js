@@ -17,9 +17,9 @@ function readFiles(){
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 		fileSystem.root.getFile('log.txt', null, function(archivo){
 			archivo.file(function(archivo){
-				var lector = new FileReader();				
-				lector.onloadend = function(e){
-					pgAlert('Lectura de archivo');					
+					var lector = new FileReader();				
+					lector.onloadend = function(e){
+					//pgAlert('Lectura de archivo');					
 				}
 				$('#fileContent').text(lector.readAsText(archivo));
 				alert(lector.readAsText(archivo));
@@ -57,11 +57,11 @@ function writeFiles(){
 }
 //escribe una pausa
 function writeFilesPausa(){
-	var content = $('#fileContent').val();
+	var content = $('#eventsHistory').val();
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
 			archivo.createWriter(function(escritor){
-				escritor.onwrite = function(e){
+					escritor.onwrite = function(e){
 					//pgAlert("El archivo fue escrito Correctamente!");
 				};
 				escritor.write(content);
