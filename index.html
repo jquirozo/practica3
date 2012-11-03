@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Pr&aacute;ctica 3 - PhoneGap</title>
-		<plugin name="Contacts" value="org.apache.cordova.ContactManager" />
+        <link rel="stylesheet" href="themes/css/jqtouch.css" title="jQTouch">
 		<script src="phonegap.js" type="text/javascript" charset="utf-8"></script>
         <script src="src/lib/zepto.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="src/jqtouch.min.js" type="text/javascript" charset="utf-8"></script>
@@ -77,7 +77,7 @@
                 <div class="scroll">
                     <ul class="rounded">
                         <li class="arrow"><a href="#devic">Dispositivo <small class="counter">5</small></a> </li>
-                        <li class="arrow"><a href="#eventos">Eventos <small class="counter">2</small></a></li>
+                        <li class="arrow"><a href="#eventos">Eventos <small class="counter">4</small></a></li>                        
                         <li class="arrow"><a href="#files">Archivos <small class="counter">2</small></a></li>
                     </ul>
                     <div class="info">
@@ -105,6 +105,7 @@
                     Caracter&iacute;sticas del dispositivo.
                 </div>
 			</div>
+            
 			<div id="eventos">
 				<div class="toolbar">
                     <h1>Eventos</h1>
@@ -127,9 +128,10 @@
                 </div>
 				<div class="scroll">
 					<ul class="edit rounded" id="playFiles">
-						<li>log.txt</li>
+						<li>read-write.txt</li>
 						<li><textarea id="fileContent"></textarea></li>
-						<li><a class="grayButton readFile" href="#">Leer</a> <a class="redButton sendForm" href="#">Escribir</a></li>
+						<li><a class="grayButton readFile" href="#">Leer</a> 
+                        <a class="redButton sendForm" href="#">Escribir</a></li>
 					</ul>
 				</div>
 				<div class="info">

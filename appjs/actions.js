@@ -10,10 +10,12 @@ function pgAlert(mess){
 }
 
 
+
+
 //Lectura de archivos
 function readFiles(){
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		fileSystem.root.getFile('log.txt', null, function(archivo){
+		fileSystem.root.getFile('read-write.txt', null, function(archivo){
 			archivo.file(function(archivo){
 				var lector = new FileReader();				
 				lector.onloadend = function(e){
@@ -35,9 +37,9 @@ function readFiles(){
 }
 //Escritura de archivos
 function writeFiles(){
-	var content = $('#fileContent').val();
+	var content = $('#eventsHistory').val();
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
+		fileSystem.root.getFile('read-write.txt', { create: true }, function(archivo){
 			archivo.createWriter(function(escritor){
 				escritor.onwrite = function(e){
 					pgAlert("El archivo fue escrito Correctamente!");
@@ -53,29 +55,16 @@ function writeFiles(){
 		pgAlert("No se pudo acceder al sistema de archivos 2");
 	});
 }
-//escribe comentario de pausa
+//escribe una pausa
 function writeFilesPausa(){
-	var content = 'La Aplicacion se ha Pausado';
+	var content = $('#fileContent').val();
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
+		fileSystem.root.getFile('read-write.txt', { create: true }, function(archivo){
 			archivo.createWriter(function(escritor){
 				escritor.onwrite = function(e){
 					//pgAlert("El archivo fue escrito Correctamente!");
-					
-					archivo.file(function(archivo){
-				var lector = new FileReader();				
-				lector.onloadend = function(e){
-					//pgAlert('Lectura de archivo');					
-				}
-				$('#fileContent').text(lector.readAsText(archivo));
-				//alert(lector.readAsText(archivo));
-			}, function(){
-				pgAlert("No existe el archivo, agrega contenido y luego presiona en Escribir");
-			});											
-					
-					
 				};
-				escritor.write(content+lector.readAsText(archivo));
+				escritor.write(content);
 			}, function(){
 				pgAlert("No existe el archivo, agrega contenido y luego presiona en Escribir");
 			});
@@ -87,8 +76,6 @@ function writeFilesPausa(){
 	});
 }
 
-
-
 $(document).ready(function(){
 	document.addEventListener("deviceready",function(){
 		//Información del dispositivo
@@ -99,30 +86,14 @@ $(document).ready(function(){
 		$('#devic table td').eq(9).text(device.uuid);
 		//Historial Eventos
 		document.addEventListener("pause", function(){//Al pausar la aplicación
-			//eventHistory('La aplicaci&oacute;n se paus&oacute;');
-			//escribimos en el archivo
-			//writeFilesPausa();
-			pgAlert(pausa);
+			eventHistory('La aplicaci&oacute;n se paus&oacute;');
+			writeFilesPausa();
 		}, false);
 		document.addEventListener("resume", function(){//Al volver a la aplicación
-			pgAlert(reanuda);
-			//eventHistory('La aplicaci&oacute;n se reinici&oacute;');
-			//escribimos n el archivo
-			/*navigator.notification.confirm('¿que desea hacer?', function(boton){ 
-			switch(boton){
-				case '0':
-					//navigator.notification.beep(1);
-					break;
-				case '1':
-					navigator.notification.vibrate(500);
-					break;
-				case '2':
-					navigator.notification.alert("Plataforma", function(){ },"Practica 3","Aceptar");
-					break;
-				}
-		},"Práctica 1","Cancelar,Vibrar,Plataforma");*/
-		}, false);		
-		
+			eventHistory('La aplicaci&oacute;n se reinici&oacute;');
+		}, false);
+		//Lista de contactos
+		leerContactos();//Leer Contactos
 		//Acciones de formularios
 			$('.sendForm').click(function(){
 				switch($(this).parents('ul').attr('id')){					
