@@ -57,7 +57,7 @@ function writeFiles(){
 }
 //escribe una pausa
 function writeFilesPausa(){
-	var content = $('#eventsHistory').val();
+	var content = $('#eventsHistory').text();
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 		fileSystem.root.getFile('log.txt', { create: true }, function(archivo){
 			archivo.createWriter(function(escritor){
@@ -91,6 +91,7 @@ $(document).ready(function(){
 		}, false);
 		document.addEventListener("resume", function(){//Al volver a la aplicación
 			eventHistory('La aplicaci&oacute;n se reinici&oacute;');
+			writeFilesPausa();
 			
 		}, false);		
 		//Acciones de formularios
